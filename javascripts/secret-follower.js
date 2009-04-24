@@ -30,7 +30,7 @@ var SecretFollower = {
     }.bind(this));
   },
   preloadFollowees: function(){
-    this.followees = getCookie('following') || $A();
+    this.followees = Cookie.get('following') || $A();
     if (typeof this.followees == 'string') this.followees = unescape(this.followees).evalJSON();
     this.followees.each(function(followee){
       this.addFollowee(followee);
@@ -50,9 +50,7 @@ var SecretFollower = {
     this.fetchTweets();
   },
   saveFolloweeState: function(){
-    var date = new Date();
-    date.setTime(date.getTime()+(365*24*60*60*1000));
-    setCookie('following', this.followees.toJSON(), date);
+    Cookie.set('following', this.followees.toJSON());
   },
   addFollowee: function(followee){
     this.following.insert(this._buildFolloweeItem(followee));
@@ -73,11 +71,59 @@ var SecretFollower = {
   }
 };
 
-document.observe('dom:loaded', SecretFollower.initialize.bind(SecretFollower));
-
-var Followee = Class.create({
-  initialize: function(name){
-    this.name = name;
+/* for reading/writing cookies, why do cookies have to be so damn complicated? why can't I just read/write like every fucking thing else? */
+var Cookie = {
+  get: function(name){
+    var nameEQ = escape(name) + "=", ca = document.cookie.split(';');
+    for (var i = 0, c; i < ca.length; i++) {
+      c = ca[i];
+      while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+      if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
+  },
+  set: function(name, value, expires){
+    var date = new Date();
+    if (typeof expires == 'undefined') {
+      var date = new Date();
+      date.setTime(date.getTime()+(365*24*60*60*1000));
+      var expires = date.toGMTString();
+    } else expires = '';
+    var cookieString = escape(name) + "=" + escape(value) + ";path=/;expires=" + expires;
+    document.cookie = cookieString;
+  },
+  removeCookie: function (key) {
+    this.set(key, '', true);
+  },
+  hasCookie: function( name ){
+    return document.cookie.indexOf(escape(name)) > -1;
   }
-});
+};
 
+
+/* for jsonp */
+(function(){
+  var id = 0, head = $$('head')[0], global = this;
+  global.getJSON = function(url, callback) {
+    var script = document.createElement('script'), token = '__jsonp' + id;
+    
+    // callback should be a global function
+    global[token] = callback;
+    
+    // url should have "?" parameter which is to be replaced with a global callback name
+    script.src = url.replace(/\?(&|$)/, '__jsonp' + id + '$1');
+    
+    // clean up on load: remove script tag, null script variable and delete global callback function
+    script.onload = function() {
+      script.remove();
+      script = null;
+      delete global[token];
+    };
+    head.appendChild(script);
+    
+    // callback name should be unique
+    id++;
+  }
+})();
+
+document.observe('dom:loaded', SecretFollower.initialize.bind(SecretFollower));
