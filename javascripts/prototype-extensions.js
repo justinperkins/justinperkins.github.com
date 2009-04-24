@@ -13,7 +13,7 @@ var Cookie = {
     if (typeof expires == 'undefined') {
       var date = new Date();
       date.setTime(date.getTime()+(365*24*60*60*1000));
-      var expires = "; expires="+date.toGMTString();
+      var expires = date.toGMTString();
     } else expires = '';
     var cookieString = escape(name) + "=" + escape(value) + "; expires=" + expires;
     console.log(cookieString);
