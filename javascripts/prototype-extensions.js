@@ -15,7 +15,7 @@ var Cookie = {
       date.setTime(date.getTime()+(365*24*60*60*1000));
       var expires = date.toGMTString();
     } else expires = '';
-    var cookieString = escape(name) + "=" + escape(value) + "; expires=" + expires;
+    var cookieString = escape(name) + "=" + escape(value) + ";path=/;expires=" + expires;
     document.cookie = cookieString;
   },
   removeCookie: function (key) {
