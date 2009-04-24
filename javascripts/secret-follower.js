@@ -42,6 +42,7 @@ var SecretFollower = {
     this.input.value = '';
     
     if (this.followees.indexOf(followee) > -1) return;
+    if (this.followees.size() == 8) alert("Max followees reached, don't overdo it bud (twitter jsonp xml ajax response error: 4 8 15 16 23 42).");
     
     this.addFollowee(followee);
     this.followees.push(followee);
