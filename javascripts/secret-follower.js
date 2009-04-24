@@ -38,11 +38,11 @@ var SecretFollower = {
   },
   formSubmit: function(event){
     event.stop();
-    var followee = this.input.value;
+    var followee = this.input.value.strip();
     this.input.value = '';
     
-    if (this.followees.indexOf(followee) > -1) return;
-    if (this.followees.size() == 8) alert("Max followees reached, don't overdo it bud (twitter jsonp xml ajax response error: 4 8 15 16 23 42).");
+    if (followee == '' || this.followees.indexOf(followee) > -1) return;
+    if (this.followees.size() >= 8) return alert("Max followees (8) reached. Remove a few first.") ;
     
     this.addFollowee(followee);
     this.followees.push(followee);
