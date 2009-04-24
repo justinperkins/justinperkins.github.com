@@ -1,31 +1,34 @@
-var Cookie = {
-  get: function(name){
-    var nameEQ = escape(name) + "=", ca = document.cookie.split(';');
-    for (var i = 0, c; i < ca.length; i++) {
-      c = ca[i];
-      while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-      if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
-    }
-    return null;
-  },
-  set: function(name, value, expires){
-    var date = new Date();
-    if (typeof expires == 'undefined') {
-      var date = new Date();
-      date.setTime(date.getTime()+(365*24*60*60*1000));
-      var expires = date.toGMTString();
-    } else expires = '';
-    var cookieString = escape(name) + "=" + escape(value) + ";path=/;expires=" + expires;
-    document.cookie = cookieString;
-  },
-  removeCookie: function (key) {
-    this.set(key, '', true);
-  },
-  hasCookie: function( name ){
-    return document.cookie.indexOf(escape(name)) > -1;
-  }
-};
+function setCookie(name,value,expires,path,theDomain,secure){ 
+  value = escape(value);
+  var theCookie = name + "=" + value + 
+  ((expires)    ? "; expires=" + expires.toGMTString() : "") + 
+  ((path)       ? "; path="    + path   : "") + 
+  ((theDomain)  ? "; domain="  + theDomain : "") + 
+  ((secure)     ? "; secure"            : ""); 
+  document.cookie = theCookie;
+} 
+ 
+function getCookie(name){
+  var search = name + "=" 
+  if (document.cookie.length > 0) { // if there are any cookies 
+    var offset = document.cookie.indexOf(search) 
+    if (offset != -1) { // if cookie exists 
+      offset += search.length 
+      // set index of beginning of value 
+      var end = document.cookie.indexOf(";", offset) 
+      // set index of end of cookie value 
+      if (end == -1) end = document.cookie.length 
+      return unescape(document.cookie.substring(offset, end)) 
+    } 
+  } 
+} 
 
+function delCookie(name,path,domain){
+  if (getCookie(name)) document.cookie = name + "=" +
+    ((path)   ? ";path="   + path   : "") +
+    ((domain) ? ";domain=" + domain : "") +
+    ";expires=Thu, 01-Jan-70 00:00:01 GMT";
+}
 
 (function(){
   var id = 0, head = $$('head')[0], global = this;

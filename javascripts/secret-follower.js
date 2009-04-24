@@ -30,7 +30,7 @@ var SecretFollower = {
     }.bind(this));
   },
   preloadFollowees: function(){
-    this.followees = Cookie.get('following') || $A();
+    this.followees = getCookie('following') || $A();
     if (typeof this.followees == 'string') this.followees = unescape(this.followees).evalJSON();
     this.followees.each(function(followee){
       this.addFollowee(followee);
@@ -50,7 +50,9 @@ var SecretFollower = {
     this.fetchTweets();
   },
   saveFolloweeState: function(){
-    Cookie.set('following', this.followees.toJSON());
+    var date = new Date();
+    date.setTime(date.getTime()+(365*24*60*60*1000));
+    setCookie('following', this.followees.toJSON(), date);
   },
   addFollowee: function(followee){
     this.following.insert(this._buildFolloweeItem(followee));
