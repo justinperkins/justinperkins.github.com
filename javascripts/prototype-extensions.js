@@ -16,6 +16,7 @@ var Cookie = {
       var expires = "; expires="+date.toGMTString();
     } else expires = '';
     var cookieString = escape(name) + "=" + escape(value) + "; expires=" + expires;
+    console.log(cookieString);
     document.cookie = cookieString;
   },
   removeCookie: function (key) {
