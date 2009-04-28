@@ -67,7 +67,7 @@ var SecretFollower = {
     return '<li><a href="http://www.twitter.com/' + followee + '">' + followee + '</a>&nbsp;<a href="#" title="remove followee" class="remove" onclick="return SecretFollower.removeFollowee(this, \'' + followee + '\');">&times;</a></li>';
   },
   _buildTweetItem: function(tweet){
-    return '<li><img src="' + tweet.profile_image_url + '" alt=""/>' + tweet.text + '&nbsp;<a href="http://twitter.com/' + tweet.from_user + '/statuses/' + tweet.id + '" title="view tweet">&rarr</a></li>';
+    return '<li><img src="' + tweet.profile_image_url + '" alt=""/>' + tweet.text + '&nbsp;<a href="http://twitter.com/' + tweet.from_user + '/status/' + tweet.id + '" title="view tweet">&rarr</a></li>';
   }
 };
 
