@@ -22,6 +22,7 @@ var SecretFollower = {
     if (this.followees.size() == 0) return;
     this.meta.insert('<li><a href="http://search.twitter.com/search.atom?q=' + escape(query.join(' OR ')) + '">subscribe rss</a></li>');
     this.meta.insert('<li><a href="http://search.twitter.com/search?q=' + escape(query.join(' OR ')) + '">view on twitter</a></li>');
+    this.meta.insert('<li><a href="' + SecretFollower.buildBookmark() + '">bookmark</a></li>');
   },
   tweetCallback: function(data){
     this.tweets.update('');
@@ -30,8 +31,9 @@ var SecretFollower = {
     }.bind(this));
   },
   preloadFollowees: function(){
-    this.followees = Cookie.get('following') || $A();
+    this.followees = this._bookmarkFollowees() || Cookie.get('following') || $A();
     if (typeof this.followees == 'string') this.followees = unescape(this.followees).evalJSON();
+    if (this.followees && this.followees.size() > 0) this.saveFolloweeState();
     this.followees.each(function(followee){
       this.addFollowee(followee);
     }.bind(this));
@@ -52,6 +54,10 @@ var SecretFollower = {
   saveFolloweeState: function(){
     Cookie.set('following', this.followees.toJSON());
   },
+  buildBookmark: function(){
+    var urlSansQueryString = document.location.href.replace(document.location.search, '');
+    return urlSansQueryString + '?' + escape(this.followees.toJSON());
+  },
   addFollowee: function(followee){
     this.following.insert(this._buildFolloweeItem(followee));
   },
@@ -62,6 +68,9 @@ var SecretFollower = {
     this.followees = this.followees.without(followee);
     this.saveFolloweeState();
     this.fetchTweets();
+  },
+  _bookmarkFollowees: function(){
+    return document.location.search.replace('?', '');
   },
   _buildFolloweeItem: function(followee){
     return '<li><a href="http://www.twitter.com/' + followee + '">' + followee + '</a>&nbsp;<a href="#" title="remove followee" class="remove" onclick="return SecretFollower.removeFollowee(this, \'' + followee + '\');">&times;</a></li>';
@@ -123,7 +132,7 @@ var Cookie = {
     
     // callback name should be unique
     id++;
-  }
+  };
 })();
 
 document.observe('dom:loaded', SecretFollower.initialize.bind(SecretFollower));
