@@ -1,6 +1,9 @@
 ---
-layout: default
-title: Stuff
+layout: post
+title: Playground
 ---
-{% for post in site.posts limit:5 %}
-{% endfor %}
+<ul>
+  {% for post in site.posts limit:5 %}
+    <li>{{ post.date }}: <a href="{{ post.url }}">{{ post.title }}</a></li>
+  {% endfor %}
+</ul>

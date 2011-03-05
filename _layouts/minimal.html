@@ -4,10 +4,12 @@
     <meta charset="UTF-8" />
     <title>Justin &rarr; {{page.title}}</title>
     {%include styles.html%}
+    <style type="text/css">
+    body > a{ display:block; text-align:left; font-size:20px; background:#fff; text-decoration:none; padding:2px 5px; }
+    </style>
   </head>
-  <body class="main">
-    <h1>Hey, look at this</h1>
-    <h2>I put some random stuff here</h2>
+  <body>
+    <a href="/">&larr; back</a>
     {{content}}
     {%include analytics.html%}
   </body>

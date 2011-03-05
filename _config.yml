@@ -1,3 +1,4 @@
-# auto: true
+auto: true
 server: true
+pygments: true
 # baseurl: http://justinperkins.github.com
