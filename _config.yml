@@ -1,4 +1,4 @@
 auto: true
 server: true
 pygments: true
-# baseurl: http://justinperkins.github.com
+baseurl: http://justinperkins.github.com
