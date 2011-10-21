@@ -4,11 +4,14 @@
     <meta charset="UTF-8" />
     <title>Justin &rarr; {{page.title}}</title>
     {%include styles.html%}
+    {%include scripts.html%}
     <link rel="alternate" type="application/atom+xml" title="Justin Perkins - Atom" href="http://feeds.feedburner.com/mr_justin" />
   </head>
   <body class="main">
-    <h1>Hey, look at this</h1>
-    <h2>I put some random stuff here</h2>
+    <div class="header">
+      <h1>Hey, look at this!</h1>
+      <h2>Just some stupid person, sharing their stupid thoughts with you even though you didn't ask for them.</h2>
+    </div>
     {{content}}
     {%include analytics.html%}
   </body>

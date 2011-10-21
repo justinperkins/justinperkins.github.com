@@ -1,0 +1,15 @@
+<script type="text/javascript" src="/javascripts/jquery-1.6.4.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+	  var prevDate, currDate;
+	  var monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+	  $('.main ul li').each(function(){
+	    var currDate = new Date($(this).data('date'));
+	    if (!prevDate || currDate.getMonth() != prevDate.getMonth()){
+	      $(this).before('<li class="filler">'+monthNames[currDate.getMonth()]+'</li>')
+	    }
+	    if (!prevDate || currDate.getMonth() != prevDate.getMonth()) prevDate = currDate;
+	    
+	  })
+	})
+</script>
