@@ -3,7 +3,7 @@ layout: post
 title: Playground
 ---
 <ul>
-  {% for post in site.posts limit:5 %}
+  {% for post in site.posts %}
     <li>{{ post.date }}: <a href="{{ post.url }}">{{ post.title }}</a></li>
   {% endfor %}
 </ul>
