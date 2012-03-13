@@ -1,3 +1,4 @@
 *.tmproj
 _site
 .rvmrc
+.DS_Store
