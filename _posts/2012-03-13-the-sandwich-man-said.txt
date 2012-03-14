@@ -1,0 +1,11 @@
+---
+layout: simple
+title: "The Sandwich Man Said"
+---
+
+<style type="text/css">
+body{background:#005D8F; }
+body > a{ background:transparent; color:#63C0F2; }
+h1{ color:#63C0F2; font-size:10em; text-align:right; margin:0 10px 0 0; }
+</style>
+<h1>The sandwich man said I smelled delicious. The sandwich man said I smelled fresh. That's awesome, I said with a smile.</h1>
