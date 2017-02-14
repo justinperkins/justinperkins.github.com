@@ -1,4 +1,2 @@
-auto: true
-server: true
-pygments: true
+highlighter: true
 baseurl: http://justinperkins.github.com
