@@ -4,6 +4,15 @@ title: "passé pixel art"
 ---
 
 <style type="text/css">
+input[type=text]{
+  display:block;
+  background:transparent;
+  border:0;
+  margin:1em auto;
+  width:15em;
+  font-size:2em;
+  font-weight:bold;
+}
 #grid{
   padding:3px;
 }
@@ -22,7 +31,7 @@ title: "passé pixel art"
 }
 </style>
 <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc=" crossorigin="anonymous"></script>
-<h1>i will finish you later</h1>
+<input type="text" value="type ..." />
 
 <div id="grid">
 </div>
@@ -41,47 +50,59 @@ var chart = {
   j: [[0,1,0], [0,0,0], [0,1,0], [0,1,0], [1,1,0]],
   k: [[1,0,0], [1,0,0], [1,0,1], [1,1,0], [1,0,1]],
   l: [[1,0,0], [1,0,0], [1,0,0], [1,0,0], [1,1,0]],
-  m: [[1,0,0], [1,0,0], [1,0,0], [1,0,0], [1,0,0]],
-  n: [[1,0,0], [1,0,0], [1,1,1], [1,0,1], [1,1,1]],
-  o: [[1,0,0], [1,0,0], [1,1,1], [1,0,1], [1,1,1]],
-  p: [[1,0,0], [1,0,0], [1,1,1], [1,0,1], [1,1,1]],
-  q: [[1,0,0], [1,0,0], [1,1,1], [1,0,1], [1,1,1]],
-  r: [[1,0,0], [1,0,0], [1,1,1], [1,0,1], [1,1,1]],
-  s: [[1,0,0], [1,0,0], [1,1,1], [1,0,1], [1,1,1]],
-  t: [[1,0,0], [1,0,0], [1,1,1], [1,0,1], [1,1,1]],
-  u: [[1,0,0], [1,0,0], [1,1,1], [1,0,1], [1,1,1]],
-  v: [[1,0,0], [1,0,0], [1,1,1], [1,0,1], [1,1,1]],
-  w: [[1,0,0], [1,0,0], [1,1,1], [1,0,1], [1,1,1]],
-  x: [[1,0,0], [1,0,0], [1,1,1], [1,0,1], [1,1,1]],
-  y: [[1,0,0], [1,0,0], [1,1,1], [1,0,1], [1,1,1]],
-  z: [[1,0,0], [1,0,0], [1,1,1], [1,0,1], [1,1,1]]
+  m: [[0,0,0], [0,0,0], [1,0,1], [1,1,1], [1,1,1]],
+  n: [[0,0,0], [0,0,0], [1,1,0], [1,0,1], [1,0,1]],
+  o: [[0,0,0], [0,0,0], [1,1,1], [1,0,1], [1,1,1]],
+  p: [[1,1,1], [1,0,1], [1,1,1], [1,0,0], [1,0,0]],
+  q: [[1,1,1], [1,0,1], [1,1,1], [0,0,1], [0,0,1]],
+  r: [[0,0,0], [0,0,0], [0,1,0], [1,0,0], [1,0,0]],
+  s: [[1,1,1], [1,0,0], [1,1,1], [0,0,1], [1,1,1]],
+  t: [[0,1,0], [0,1,0], [1,1,1], [0,1,0], [0,1,0]],
+  u: [[0,0,0], [0,0,0], [1,0,1], [1,0,1], [1,1,0]],
+  v: [[0,0,0], [0,0,0], [1,0,1], [1,0,1], [0,1,0]],
+  w: [[0,0,0], [0,0,0], [1,1,1], [1,1,1], [1,0,1]],
+  x: [[0,0,0], [0,0,0], [1,0,1], [0,1,0], [1,0,1]],
+  y: [[0,0,0], [1,0,1], [1,1,1], [0,0,1], [0,1,0]],
+  z: [[0,0,0], [1,1,1], [0,0,1], [0,1,0], [1,1,1]],
+  ' ': [],
+  '.': [[0,0,0], [0,0,0], [0,0,0], [0,0,0], [0,1,0]],
+  '?': [[1,1,0], [0,0,1], [0,1,0], [0,0,0], [0,1,0]],
+  '!': [[0,1,0], [0,1,0], [0,1,0], [0,0,0], [0,1,0]]
 }
 $(document).ready(function(){
-  var word = 'abcdefghijklmnopqrstuvwxyz'//$('h1').html()
-  var letterWidth = 4;
-  var $grid = $('#grid')
-  var rows = 5
-  var columns = word.length * letterWidth
-  for (var i=0;i<rows;i++){
-    var $row = $('<div class="row row-' + i + '"></div>')
-    $grid.append($row)
-    for (var j=0;j<columns;j++){
-      $row.append('<div class="tile tile-' + j + '"></div>')
+  
+  var $box = $('input[type=text]')
+  function textChange(){
+    var word = $box.val()
+    var letterWidth = 4;
+    var $grid = $('#grid')
+    $grid.html('')
+    var rows = 5
+    var columns = word.length * letterWidth
+    for (var i=0;i<rows;i++){
+      var $row = $('<div class="row row-' + i + '"></div>')
+      $grid.append($row)
+      for (var j=0;j<columns;j++){
+        $row.append('<div class="tile tile-' + j + '"></div>')
+      }
     }
-  }
-  for (var i=0;i<word.length;i++){
-    var letter = word[i];
-    var coding = chart[letter]
-    for (var j=0;j<coding.length;j++){
-      var $row = $grid.find('.row-' + j)
-      for (var k=0;k<coding[j].length;k++){
-        var tilePosition = (i*letterWidth)+k;
-        var $tile = $row.find('.tile-' + tilePosition)
-        if (coding[j][k] == 1){
-          $tile.addClass('on')
+    for (var i=0;i<word.length;i++){
+      var letter = word[i];
+      var coding = chart[letter]
+      for (var j=0;j<coding.length;j++){
+        var $row = $grid.find('.row-' + j)
+        for (var k=0;k<coding[j].length;k++){
+          var tilePosition = (i*letterWidth)+k;
+          var $tile = $row.find('.tile-' + tilePosition)
+          if (coding[j][k] == 1){
+            $tile.addClass('on')
+          }
         }
       }
     }
   }
+  
+  $box.on('keyup', textChange)
+  textChange()
 })
 </script>
